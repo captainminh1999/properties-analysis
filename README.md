@@ -16,7 +16,7 @@ A comprehensive Python-based property analytics solution for the Australian mark
 ## 📁 Project Structure
 
 ```
-property-analysis/
+properties-analysis/
 ├── data/
 │   ├── raw/          # Raw data files
 │   ├── processed/    # Cleaned and processed data
@@ -40,8 +40,8 @@ property-analysis/
 ### 1. Clone and Setup
 
 ```bash
-git clone <repository-url>
-cd property-analysis
+git clone https://github.com/captainminh1999/properties-analysis.git
+cd properties-analysis
 ```
 
 ### 2. Install Dependencies
@@ -338,9 +338,23 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For questions or support:
-- Open an issue on GitHub
+- Open an issue on GitHub: https://github.com/captainminh1999/properties-analysis/issues
 - Check the documentation in the notebooks
 - Review the example usage patterns
+
+## 📊 Repository
+
+This project is hosted on GitHub: https://github.com/captainminh1999/properties-analysis
+
+### Contributing
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes and commit: `git commit -m "Add feature"`
+4. Push to the branch: `git push origin feature-name`
+5. Submit a pull request
+
+### Issues and Bug Reports
+Please use the GitHub Issues page to report bugs or request features.
 
 ---
 
