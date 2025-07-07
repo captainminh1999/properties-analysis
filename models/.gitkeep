@@ -1,0 +1,12 @@
+# Models Directory
+
+This directory stores trained machine learning models.
+
+## Contents
+- Trained XGBoost property valuation models
+- Random Forest models
+- Model metadata and configuration files
+- Feature scalers and encoders
+
+## Usage
+Models are saved here after training and can be loaded for making predictions on new property data.

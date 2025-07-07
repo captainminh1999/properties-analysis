@@ -1,0 +1,12 @@
+# Raw Data Directory
+
+This directory stores raw, unprocessed data files.
+
+## Contents
+- Property listings from Domain.com.au API
+- ABS socio-economic datasets
+- Geospatial boundary files
+- Other raw data sources
+
+## Usage
+Files in this directory should not be modified directly. Use the data processing scripts to clean and transform raw data.
