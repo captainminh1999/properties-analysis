@@ -17,6 +17,7 @@ from data_processor import PropertyDataProcessor, calculate_property_kpis
 from ml_models import PropertyValuationModel, identify_overvalued_properties
 from monte_carlo import MonteCarloPropertySimulation
 
+
 def main():
     """Main workflow demonstration"""
     print("🏠 Property Analytics Tool - Example Usage")
@@ -44,35 +45,9 @@ def main():
     print("\n📈 Step 2: Loading ABS socio-economic data...")
     socio_data = fetch_abs_socioeconomic_data(config['suburbs'])
     print(f"✅ Loaded socio-economic data for {len(socio_data)} regions")
-        
-        price = base * type_mult * bedroom_mult * area_mult
-        price *= np.random.normal(1, 0.2)
-        prices.append(max(price, 100000))
     
-    df['price'] = prices
-    return df
-
-def main():
-    """Main demonstration workflow"""
-    print("🏠 Property Analytics Tool - Example Usage")
-    print("=" * 50)
-    
-    # Step 1: Create sample data
-    print("\n📊 Step 1: Creating sample property data...")
-    property_data = create_sample_data()
-    print(f"✅ Generated {len(property_data)} property records")
-    
-    # Add sample socio-economic data
-    socio_data = pd.DataFrame({
-        'SA2_NAME': ['Sydney', 'Melbourne', 'Brisbane'],
-        'MEDIAN_INCOME': [85000, 72000, 65000],
-        'UNEMPLOYMENT_RATE': [4.2, 5.1, 4.8],
-        'POPULATION': [25000, 18000, 22000],
-        'EDUCATION_BACHELOR_PCT': [65.2, 58.4, 48.9]
-    })
-    
-    # Step 2: Process data
-    print("\n🧹 Step 2: Processing and cleaning data...")
+    # Step 3: Process data
+    print("\n🧹 Step 3: Processing and cleaning data...")
     processor = PropertyDataProcessor()
     clean_data = processor.clean_property_data(property_data)
     merged_data = processor.merge_with_socioeconomic_data(clean_data, socio_data)
@@ -80,8 +55,8 @@ def main():
     geo_data = processor.calculate_distance_features(geo_data)
     print(f"✅ Data processing complete. Shape: {geo_data.shape}")
     
-    # Step 3: Calculate KPIs
-    print("\n📈 Step 3: Calculating market KPIs...")
+    # Step 4: Calculate KPIs
+    print("\n📈 Step 4: Calculating market KPIs...")
     kpis = calculate_property_kpis(geo_data)
     print(f"Overall median price: ${kpis['median_price']:,.0f}")
     
@@ -90,9 +65,9 @@ def main():
     for suburb, price in suburb_stats.items():
         print(f"  {suburb}: ${price:,.0f}")
     
-    # Step 4: Train ML model
-    print("\n🤖 Step 4: Training valuation model...")
-    model = PropertyValuationModel('random_forest')  # Use random_forest as it doesn't require xgboost
+    # Step 5: Train ML model
+    print("\n🤖 Step 5: Training valuation model...")
+    model = PropertyValuationModel('random_forest')  # Use random_forest as it's more reliable
     
     try:
         metrics = model.train(geo_data, target_col='price')
@@ -100,8 +75,8 @@ def main():
         print(f"Test R² Score: {metrics['test_r2']:.3f}")
         print(f"Test RMSE: ${metrics['test_rmse']:,.0f}")
         
-        # Step 5: Identify over/undervalued properties
-        print("\n🔍 Step 5: Analyzing property valuations...")
+        # Step 6: Identify over/undervalued properties
+        print("\n🔍 Step 6: Analyzing property valuations...")
         valuation_analysis = identify_overvalued_properties(geo_data, model, threshold=0.15)
         
         valuation_summary = valuation_analysis['valuation_status'].value_counts()
@@ -112,9 +87,10 @@ def main():
         
     except Exception as e:
         print(f"⚠️ Model training skipped: {e}")
+        valuation_analysis = geo_data.copy()
     
-    # Step 6: Monte Carlo simulation
-    print("\n🎯 Step 6: Running Monte Carlo price simulation...")
+    # Step 7: Monte Carlo simulation
+    print("\n🎯 Step 7: Running Monte Carlo price simulation...")
     sample_price = geo_data['price'].median()
     
     simulator = MonteCarloPropertySimulation(
@@ -136,22 +112,30 @@ def main():
     except Exception as e:
         print(f"⚠️ Simulation error: {e}")
     
-    # Step 7: Save results
-    print("\n💾 Step 7: Saving results...")
+    # Step 8: Save results
+    print("\n💾 Step 8: Saving results...")
     os.makedirs('data/outputs', exist_ok=True)
     
     try:
         geo_data.to_csv('data/outputs/sample_analysis.csv', index=False)
-        print("✅ Results saved to data/outputs/sample_analysis.csv")
+        if 'valuation_analysis' in locals():
+            valuation_analysis.to_csv('data/outputs/valuation_analysis.csv', index=False)
+        print("✅ Results saved to data/outputs/")
     except Exception as e:
         print(f"⚠️ Save error: {e}")
     
     print("\n🎉 Example workflow completed successfully!")
+    print("\nKey Results:")
+    print(f"📊 Analyzed {len(geo_data)} properties across {len(config['suburbs'])} cities")
+    print(f"💰 Price range: ${geo_data['price'].min():,.0f} - ${geo_data['price'].max():,.0f}")
+    print(f"🏠 Property types: {geo_data['property_type'].value_counts().to_dict()}")
+    
     print("\nNext steps:")
-    print("1. Get a Domain.com.au API key")
-    print("2. Update config.py with your API credentials")
-    print("3. Run the full Jupyter notebook analysis")
-    print("4. Customize the analysis for your specific needs")
+    print("1. Open the Jupyter notebook for interactive analysis")
+    print("2. Customize suburbs and property types for your area")
+    print("3. Explore the interactive visualizations")
+    print("4. Use the ML models for property valuation")
+
 
 if __name__ == "__main__":
     main()

@@ -349,10 +349,10 @@ def run_portfolio_simulation(property_prices: List[float],
     portfolio_stats = {
         'initial_portfolio_value': initial_value,
         'final_portfolio_mean': final_values.mean(),
-        'final_portfolio_median': final_values.median(),
+        'final_portfolio_median': np.median(final_values),
         'portfolio_return_pct': ((final_values.mean() / initial_value) - 1) * 100,
         'annual_return_pct': (((final_values.mean() / initial_value) ** (1/simulation_years)) - 1) * 100,
-        'value_at_risk_5pct': final_values.quantile(0.05),
+        'value_at_risk_5pct': np.percentile(final_values, 5),
         'individual_properties': individual_results
     }
     

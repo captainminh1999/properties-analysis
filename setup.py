@@ -159,11 +159,12 @@ def main():
     # Run verification test
     if run_example():
         print("\n🎉 Setup completed successfully!")
+        print("🆓 No API keys required - completely free to use!")
         print("\nNext steps:")
-        print("1. Edit config.py and add your Domain.com.au API key")
-        print("2. Open Jupyter notebook: jupyter notebook notebooks/property_analytics_main.ipynb")
-        print("3. Run the example: python example_usage.py")
-        print("4. Start analyzing Australian property data!")
+        print("1. Open Jupyter notebook: jupyter notebook notebooks/property_analytics_main.ipynb")
+        print("2. Run the example: python example_usage.py")
+        print("3. Start analyzing Australian property data with free ABS statistics!")
+        print("4. No configuration needed - works out of the box!")
     else:
         print("\n❌ Setup verification failed")
         print("Please check the error messages above and try again")

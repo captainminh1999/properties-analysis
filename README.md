@@ -1,17 +1,18 @@
 # Australian Property Analytics Tool
 
-A comprehensive Python-based property analytics solution for the Australian market, featuring data fetching, machine learning valuation, Monte Carlo forecasting, and interactive visualizations.
+A comprehensive Python-based property analytics solution for the Australian market, featuring realistic data generation, machine learning valuation, Monte Carlo forecasting, and interactive visualizations.
 
 ## 🏠 Features
 
-- **Data Integration**: Fetch property listings from Domain.com.au Developer API
-- **Socio-Economic Analysis**: Integrate ABS (Australian Bureau of Statistics) data
+- **Realistic Data Generation**: Generate property data based on Australian market patterns
+- **ABS Data Integration**: Leverage Australian Bureau of Statistics socio-economic data
 - **Advanced Analytics**: Calculate key market indicators and regional statistics
 - **ML Valuation Models**: XGBoost and Random Forest models for property valuation
 - **Risk Assessment**: Identify over/undervalued properties
 - **Monte Carlo Simulation**: Forecast future property prices over 3-5 years
 - **Interactive Visualizations**: Charts, maps, and dashboards using Plotly and Folium
 - **Geospatial Analysis**: Map properties to SA2 regions using GeoPandas
+- **100% Free**: No API keys or paid services required
 
 ## 📁 Project Structure
 
@@ -25,13 +26,12 @@ properties-analysis/
 │   └── property_analytics_main.ipynb  # Main analysis notebook
 ├── models/           # Saved ML models
 ├── scripts/          # Core Python modules
-│   ├── data_fetcher.py      # API clients and data fetching
+│   ├── data_fetcher.py      # ABS data fetching and property data generation
 │   ├── data_processor.py    # Data cleaning and processing
 │   ├── ml_models.py         # Machine learning models
 │   ├── monte_carlo.py       # Monte Carlo simulation
 │   └── visualization.py     # Interactive visualizations
 ├── requirements.txt  # Python dependencies
-├── config_template.py  # Configuration template
 └── README.md        # This file
 ```
 
@@ -50,19 +50,14 @@ cd properties-analysis
 pip install -r requirements.txt
 ```
 
-### 3. Configure API Keys
+### 3. Run the Analysis
 
 ```bash
-# Copy the configuration template
-cp config_template.py config.py
-
-# Edit config.py and add your API keys
-```
-
-### 4. Launch Jupyter Notebook
-
-```bash
+# Launch Jupyter Notebook
 jupyter notebook notebooks/property_analytics_main.ipynb
+
+# OR run the example script
+python example_usage.py
 ```
 
 ## 📋 Prerequisites
@@ -76,28 +71,22 @@ jupyter notebook notebooks/property_analytics_main.ipynb
 - **Statistical Analysis**: scipy, statsmodels
 - **Jupyter**: jupyter, ipywidgets
 
-### API Access
+### No API Keys Required! 
 
-1. **Domain.com.au Developer API**
-   - Sign up at: https://developer.domain.com.au/
-   - Get your API key and add to `config.py`
-
-2. **ABS Data** (Optional)
-   - Most ABS data is freely available
-   - Some datasets may require registration
+This tool generates realistic property data based on Australian market patterns and uses publicly available ABS statistics. No paid API access needed.
 
 ## 🔧 Configuration
 
-### API Configuration
-
-Edit `config.py` with your settings:
+All configuration is handled in the notebook or script files. Key parameters include:
 
 ```python
-# Domain.com.au API
-DOMAIN_API_KEY = "your_domain_api_key_here"
-
-# Analysis parameters
-DEFAULT_SUBURBS = ["Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide"]
+CONFIG = {
+    'ANALYSIS_SUBURBS': ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide'],
+    'PROPERTY_TYPES': ['House', 'Unit', 'Townhouse'],
+    'SIMULATION_YEARS': 5,
+    'MODEL_TYPE': 'xgboost',
+    'NUM_PROPERTIES': 500  # Number of properties to generate
+}
 DEFAULT_PROPERTY_TYPES = ["House", "Unit", "Townhouse"]
 
 # Model parameters
@@ -212,13 +201,13 @@ The tool includes advanced geospatial capabilities:
 
 ## 🔄 Data Pipeline
 
-### 1. Data Fetching
+### 1. Data Generation
 ```python
-# Domain API integration
-properties = fetch_property_listings(api_key, suburbs)
+# Generate realistic property data
+properties = create_realistic_property_data(suburbs, property_types)
 
 # ABS socio-economic data
-socio_data = fetch_abs_socioeconomic_data()
+socio_data = fetch_abs_socioeconomic_data(suburbs)
 ```
 
 ### 2. Data Processing
@@ -253,14 +242,19 @@ map = viz.create_property_map(data)
 ## 📝 Example Usage
 
 ```python
-# Initialize components
-from scripts.data_fetcher import DomainAPIClient
-from scripts.ml_models import PropertyValuationModel
+# Initialize components (No API keys required!)
+from scripts.data_fetcher import create_realistic_property_data, fetch_abs_socioeconomic_data
+from scripts.ml_models import PropertyValuationModel, identify_overvalued_properties
 from scripts.monte_carlo import MonteCarloPropertySimulation
 
-# Fetch property data
-client = DomainAPIClient(api_key)
-properties = client.search_properties(suburb="Sydney", property_types=["House"])
+# Generate realistic property data
+property_data = create_realistic_property_data(
+    suburbs=['Sydney', 'Melbourne'], 
+    num_properties=100
+)
+
+# Fetch ABS socio-economic data
+socio_data = fetch_abs_socioeconomic_data(['Sydney', 'Melbourne'])
 
 # Train valuation model
 model = PropertyValuationModel('xgboost')
@@ -331,9 +325,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- **Domain.com.au** for property data API
-- **Australian Bureau of Statistics** for socio-economic data
+- **Australian Bureau of Statistics** for socio-economic data and market statistics
 - **Open Source Community** for the excellent Python libraries used
+- **Python Data Science Stack** for enabling powerful analytics
 
 ## 📞 Support
 

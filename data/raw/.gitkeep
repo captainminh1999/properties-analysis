@@ -3,10 +3,13 @@
 This directory stores raw, unprocessed data files.
 
 ## Contents
-- Property listings from Domain.com.au API
-- ABS socio-economic datasets
+- Generated realistic property data based on Australian market patterns
+- ABS socio-economic datasets and statistics
 - Geospatial boundary files
-- Other raw data sources
+- Other free data sources
+
+**🆓 Note: No API data is stored here - this tool uses only free data sources!**
 
 ## Usage
-Files in this directory should not be modified directly. Use the data processing scripts to clean and transform raw data.
+Files in this directory are auto-generated when running the analysis.
+Use the data processing scripts to clean and transform raw data.
